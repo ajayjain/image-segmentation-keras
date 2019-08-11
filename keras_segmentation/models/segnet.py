@@ -1,7 +1,6 @@
 
-
-from keras.models import *
-from keras.layers import *
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
 import os
 
 from .config import IMAGE_ORDERING
@@ -95,6 +94,6 @@ if __name__ == '__main__':
 	m = vgg_segnet( 101 )
 	m = segnet( 101 )
 	# m = mobilenet_segnet( 101 )
-	# from keras.utils import plot_model
+	# from tensorflow.keras.utils import plot_model
 	# plot_model( m , show_shapes=True , to_file='model.png')
 

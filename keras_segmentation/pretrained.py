@@ -1,5 +1,5 @@
-from keras.models import load_model
-import keras
+from tensorflow.keras.models import load_model
+from tensorflow import keras
 
 from .models import model_from_name
 
