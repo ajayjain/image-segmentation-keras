@@ -2,16 +2,14 @@
 
 
 from math import ceil
+
 from tensorflow.keras import layers
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, AveragePooling2D
 from tensorflow.keras.layers import BatchNormalization, Activation, Input, Dropout, ZeroPadding2D, Lambda
-from tensorflow.keras.layers.merge import Concatenate, Add
+from tensorflow.keras.layers import Concatenate, Add
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import SGD
-
-from tensorflow.keras.backend import tf as ktf
 import tensorflow as tf
-
 
 from .config import IMAGE_ORDERING
 from .model_utils import get_segmentation_model , resize_image
@@ -36,8 +34,8 @@ class Interp(layers.Layer):
 
     def call(self, inputs, **kwargs):
         new_height, new_width = self.new_size
-        resized = ktf.image.resize_images(inputs, [new_height, new_width],
-                                          align_corners=True)
+        resized = tf.compat.v1.image.resize_images(inputs, [new_height, new_width],
+                                                   align_corners=True)
         return resized
 
     def compute_output_shape(self, input_shape):
@@ -51,7 +49,7 @@ class Interp(layers.Layer):
 
 # def Interp(x, shape):
 #    new_height, new_width = shape
-#    resized = ktf.image.resize_images(x, [new_height, new_width],
+#    resized = tf.image.resize_images(x, [new_height, new_width],
 #                                      align_corners=True)
 #    return resized
 
