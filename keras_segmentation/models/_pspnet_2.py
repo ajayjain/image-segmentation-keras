@@ -74,8 +74,21 @@ def residual_conv(prev, level, pad=1, lvl=1, sub_lvl=1, modify_stride=False):
     prev = Activation('relu')(prev)
 
     prev = ZeroPadding2D(padding=(pad, pad))(prev)
-    prev = Conv2D(64 * level, (3, 3), strides=(1, 1), dilation_rate=pad,
-                  name=names[2], use_bias=False)(prev)
+    conv2 = Conv2D(64 * level, (3, 3), strides=(1, 1), dilation_rate=pad,
+                name=names[2], use_bias=False)
+    prev = conv2(prev)
+    if None in prev.shape:
+        # Work around Tensorflow bug in shape inference with dilated conv by filling
+	# in unknown height and width.
+        # https://github.com/tensorflow/tensorflow/issues/4742
+        # https://github.com/tensorflow/tensorflow/issues/11954
+        shape = list(conv2.input.shape)
+        if IMAGE_ORDERING == "channels_last":
+            shape = [shape[0], shape[1] - pad * 2, shape[2] - pad * 2, shape[3]]
+        elif IMAGE_ORDERING == "channels_first":
+            shape = [shape[0], shape[1], shape[2] - pad * 2, shape[3] - pad * 2]
+        prev.set_shape(shape)
+        conv2.output.set_shape(shape)
 
     prev = BN(name=names[3])(prev)
     prev = Activation('relu')(prev)
