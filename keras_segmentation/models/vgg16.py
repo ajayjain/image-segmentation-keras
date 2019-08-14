@@ -14,8 +14,8 @@ elif IMAGE_ORDERING == 'channels_last':
 
 def get_vgg_encoder( input_height=224 ,  input_width=224 , pretrained='imagenet'):
 
-	assert input_height%32 == 0
-	assert input_width%32 == 0
+	assert input_height%32 == 0, "Input height and width must be multiples of 32"
+	assert input_width%32 == 0, "Input height and width must be multiples of 32"
 
 	if IMAGE_ORDERING == 'channels_first':
 		img_input = Input(shape=(3,input_height,input_width))
