@@ -10,4 +10,9 @@ setup(name="keras_segmentation",
       license="MIT",
       url="https://github.com/ajayjain/image-segmentation-keras",
       packages=find_packages(),
+      install_requires=[
+            "tqdm",
+            "opencv-python",
+            "tensorflow==2.0.0rc0"
+      ]
 )
