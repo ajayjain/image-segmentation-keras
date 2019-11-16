@@ -13,6 +13,6 @@ setup(name="keras_segmentation",
       install_requires=[
             "tqdm",
             "opencv-python",
-            "tensorflow==2.0.0rc0"
+            "tensorflow>=2.0.0"
       ]
 )
